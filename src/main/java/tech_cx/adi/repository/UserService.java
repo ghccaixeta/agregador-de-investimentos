@@ -1,6 +1,7 @@
 package tech_cx.adi.repository;
 
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -29,6 +30,11 @@ public class UserService {
     var user = userRepository.save(entity);
 
     return user.getUserId();
+  }
+
+  public Optional<User> getUserById(String userId) {
+    var user = userRepository.findById(UUID.fromString(userId));
+    return user;
   }
 
 }
