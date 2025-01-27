@@ -42,4 +42,21 @@ public class UserService {
     return userRepository.findAll();
   }
 
+  public void deleteById(String userId) {
+
+    try {
+      
+      var id = UUID.fromString(userId);
+  
+      var userExists = userRepository.existsById(id);
+  
+      if(userExists){
+        userRepository.deleteById(id);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+  }
+
 }
