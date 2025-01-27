@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import tech_cx.adi.controller.CreateUserDto;
+import tech_cx.adi.controller.UpdateUserDto;
 import tech_cx.adi.entity.User;
 
 
@@ -57,6 +58,26 @@ public class UserService {
       e.printStackTrace();
     }
 
+  }
+
+  public void updateUserById(String userId, UpdateUserDto updateUserDto) {
+    var id = UUID.fromString(userId);
+  
+      var userEntity = userRepository.findById(id);
+  
+      if(userEntity.isPresent()){
+        var user = userEntity.get();
+  
+        if(updateUserDto.username() != null){
+          user.setUsername(updateUserDto.username());
+        }
+
+        if(updateUserDto.password() != null){
+          user.setPassword(updateUserDto.password());
+        }
+  
+        userRepository.save(user);
+      }
   }
 
 }
