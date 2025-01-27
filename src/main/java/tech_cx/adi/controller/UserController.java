@@ -7,6 +7,7 @@ import tech_cx.adi.entity.User;
 import tech_cx.adi.repository.UserService;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,11 @@ public class UserController {
     }
 
     return ResponseEntity.notFound().build();
+  }
+
+  @GetMapping()
+  public ResponseEntity<List<User>> listUsers(){
+    return ResponseEntity.ok(userService.listUsers());
   }
   
 

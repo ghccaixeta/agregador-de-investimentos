@@ -1,6 +1,7 @@
 package tech_cx.adi.repository;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,6 +36,10 @@ public class UserService {
   public Optional<User> getUserById(String userId) {
     var user = userRepository.findById(UUID.fromString(userId));
     return user;
+  }
+
+  public List<User> listUsers() {
+    return userRepository.findAll();
   }
 
 }
