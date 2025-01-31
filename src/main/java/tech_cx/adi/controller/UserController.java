@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import tech_cx.adi.entity.User;
-import tech_cx.adi.repository.UserService;
+import tech_cx.adi.service.UserService;
 
 import java.net.URI;
 import java.util.List;

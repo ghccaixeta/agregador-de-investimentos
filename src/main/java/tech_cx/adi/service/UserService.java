@@ -1,6 +1,5 @@
-package tech_cx.adi.repository;
+package tech_cx.adi.service;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 import tech_cx.adi.controller.CreateUserDto;
 import tech_cx.adi.controller.UpdateUserDto;
 import tech_cx.adi.entity.User;
+import tech_cx.adi.repository.UserRepository;
 
 
 @Service
