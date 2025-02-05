@@ -1,18 +1,23 @@
 package tech_cx.adi.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -31,6 +36,12 @@ public class UserServiceTest {
   // Inject the mock into the UserService
   @InjectMocks
   private UserService userService;
+
+  @Captor
+  private ArgumentCaptor<User> usArgumentCaptor;
+
+  @Captor
+  private ArgumentCaptor<UUID> uuidArgumentCaptor;
   
   @Nested
   class createUser {
@@ -49,7 +60,7 @@ public class UserServiceTest {
       );
 
       // Retun the user when save is called
-      doReturn(user).when(userRepository).save(any());
+      doReturn(user).when(userRepository).save(usArgumentCaptor.capture());
 
       var input = new CreateUserDto(
         "lsccaixeta", 
@@ -93,4 +104,27 @@ public class UserServiceTest {
 
   }
 
+  @Nested
+  class getUserById {
+    @Test
+    @DisplayName("Should get user by id with success")
+    void shouldGetUserByIdWithSuccess() {
+      //Arrange
+      var user = new User(
+        UUID.randomUUID(),
+        "lsccaixeta", 
+        "luisa@gmail.com", 
+        "1234567",
+        Instant.now(),
+        null
+      );
+
+      doReturn(Optional.of(user)).when(userRepository).findById(uuidArgumentCaptor.capture());
+
+      var output = userService.getUserById(user.getUserId().toString());
+
+      assertTrue(output.isPresent());
+
+    }
+  }
 }
