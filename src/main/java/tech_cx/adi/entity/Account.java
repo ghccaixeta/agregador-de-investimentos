@@ -12,7 +12,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,35 +24,36 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tb_users")
+@Table(name = "tb_accounts")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Account {
 
   @Id
+  @Column(name = "account_id")
   @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID userId;
+  private UUID accountId;
 
-  @Column(name = "username")
-  private String username;
-
-  @Column(name = "email")
-  private String email;
-
-  @Column(name = "password")
-  private String password;
+  @Column(name = "description")
+  private String description;
 
   @CreationTimestamp
   private Instant creationTimestamp;
 
   @UpdateTimestamp
-  private Instant updateTimestamp;
+  private Instant updateTimestamp; 
 
-  @OneToMany(mappedBy = "user")
-  private List<Account> accounts;
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
 
-  
+  @OneToOne(mappedBy = "account")
+  @PrimaryKeyJoinColumn
+  private BillingAddress  billingAddress;
+
+  @OneToMany(mappedBy = "account")
+  private List<AccountStock> accountStocks;
 
 }

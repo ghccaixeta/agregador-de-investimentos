@@ -20,35 +20,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tb_users")
+@Table(name = "tb_stock")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-
+public class Stock {
+  
   @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID userId;
+  private String stockId;
 
-  @Column(name = "username")
-  private String username;
-
-  @Column(name = "email")
-  private String email;
-
-  @Column(name = "password")
-  private String password;
+  @Column(name = "description")
+  private String description;
 
   @CreationTimestamp
   private Instant creationTimestamp;
 
   @UpdateTimestamp
   private Instant updateTimestamp;
-
-  @OneToMany(mappedBy = "user")
-  private List<Account> accounts;
-
-  
 
 }

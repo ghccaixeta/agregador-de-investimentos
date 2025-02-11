@@ -1,7 +1,6 @@
 package tech_cx.adi.entity;
 
 import java.time.Instant;
-import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,7 +11,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,35 +22,32 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tb_users")
+@Table(name = "tb_billingaddress")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class BillingAddress {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID userId;
+  @Column(name = "account_id")
+  private UUID id;
 
-  @Column(name = "username")
-  private String username;
+  @OneToOne()
+  @MapsId
+  @JoinColumn(name = "account_id")
+  private Account account;
 
-  @Column(name = "email")
-  private String email;
+  @Column(name = "street")
+  private String street;
 
-  @Column(name = "password")
-  private String password;
+  @Column(name = "number")
+  private String number;
 
   @CreationTimestamp
   private Instant creationTimestamp;
 
   @UpdateTimestamp
   private Instant updateTimestamp;
-
-  @OneToMany(mappedBy = "user")
-  private List<Account> accounts;
-
-  
 
 }
