@@ -7,6 +7,9 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,23 +40,18 @@ public class Account {
   private UUID accountId;
 
   @Column(name = "description")
-  private String description;
+  private String description;  
 
-  @CreationTimestamp
-  private Instant creationTimestamp;
+  @OneToOne(mappedBy = "account")
+  @PrimaryKeyJoinColumn
+  private BillingAddress billingAddress;
 
-  @UpdateTimestamp
-  private Instant updateTimestamp; 
+  @OneToMany(mappedBy = "account")
+  private List<AccountStock> accountStocks;
 
   @ManyToOne
   @JoinColumn(name = "user_id")
   private User user;
 
-  @OneToOne(mappedBy = "account")
-  @PrimaryKeyJoinColumn
-  private BillingAddress  billingAddress;
-
-  @OneToMany(mappedBy = "account")
-  private List<AccountStock> accountStocks;
 
 }
