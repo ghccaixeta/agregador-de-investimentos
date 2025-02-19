@@ -42,7 +42,7 @@ public class Account {
   @Column(name = "description")
   private String description;  
 
-  @OneToOne(mappedBy = "account")
+  @OneToOne(cascade = CascadeType.ALL,mappedBy = "account")
   @PrimaryKeyJoinColumn
   private BillingAddress billingAddress;
 

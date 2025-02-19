@@ -22,7 +22,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import tech_cx.adi.controller.CreateUserDto;
+import tech_cx.adi.controller.dto.CreateUserDto;
 import tech_cx.adi.entity.User;
 import tech_cx.adi.repository.UserRepository;
 
