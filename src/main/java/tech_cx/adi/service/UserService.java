@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import tech_cx.adi.controller.dto.AccountResponseDto;
 import tech_cx.adi.controller.dto.CreateAccountDto;
 import tech_cx.adi.controller.dto.CreateUserDto;
 import tech_cx.adi.controller.dto.UpdateUserDto;
@@ -118,8 +119,14 @@ public class UserService {
 
   }
 
-  public List<Account> getUserAccounts(String userId) {
-    return accountRepository.findAll();
+  public List<AccountResponseDto> listAccounts(String userId) {
+    var user = userRepository.findById(UUID.fromString(userId))
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não existe"));
+    
+    return user.getAccounts()
+    .stream()
+    .map(ac -> new AccountResponseDto(ac.getAccountId().toString(), ac.getDescription()))
+    .toList();
   }
 
 }

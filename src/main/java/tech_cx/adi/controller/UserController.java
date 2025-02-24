@@ -3,10 +3,10 @@ package tech_cx.adi.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import tech_cx.adi.controller.dto.AccountResponseDto;
 import tech_cx.adi.controller.dto.CreateAccountDto;
 import tech_cx.adi.controller.dto.CreateUserDto;
 import tech_cx.adi.controller.dto.UpdateUserDto;
-import tech_cx.adi.entity.Account;
 import tech_cx.adi.entity.User;
 import tech_cx.adi.service.UserService;
 
@@ -80,8 +80,9 @@ public class UserController {
   }
 
   @GetMapping("/{userId}/accounts")
-  public ResponseEntity<List<Account>> listUsers(@PathVariable() String userId){
-    return ResponseEntity.ok(userService.getUserAccounts(userId));
+  public ResponseEntity<List<AccountResponseDto>> listAccounts(@PathVariable() String userId){
+    var accounts = userService.listAccounts(userId);
+    return ResponseEntity.ok(accounts);
   }
   
 
