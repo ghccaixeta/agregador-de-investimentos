@@ -1,12 +1,15 @@
 package tech_cx.adi.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import tech_cx.adi.controller.dto.AccountResponseDto;
 import tech_cx.adi.controller.dto.AccountStockDto;
+import tech_cx.adi.controller.dto.AccountStockResponseDto;
 import tech_cx.adi.entity.AccountStock;
 import tech_cx.adi.entity.AccountStockId;
 import tech_cx.adi.repository.AccountRepository;
@@ -43,5 +46,15 @@ public class AccountService {
 
     accountStockRepository.save(accountStock);
     
+  }
+
+  public List<AccountStockResponseDto> listAccountStock(String accountId) {
+    var account = accountRepository.findById(UUID.fromString(accountId))
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Conta nao encontrada"));
+
+    return account.getAccountStocks()
+    .stream()
+    .map(as -> new AccountStockResponseDto(as.getStock().getStockId(), as.getQuantity()))
+    .toList();
   }
 }
